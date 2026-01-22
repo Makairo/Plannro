@@ -1,0 +1,4 @@
+com\andrewhejl\plannro\event\EventRepo.class
+com\andrewhejl\plannro\event\Event.class
+com\andrewhejl\plannro\event\EventController.class
+com\andrewhejl\plannro\PlannroApplication.class
