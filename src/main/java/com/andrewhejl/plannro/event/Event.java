@@ -1,5 +1,7 @@
 package com.andrewhejl.plannro.event;
 
+import com.andrewhejl.plannro.user.User;
+
 import jakarta.persistence.*;
 
 import java.time.LocalTime;

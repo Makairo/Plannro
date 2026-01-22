@@ -1,10 +1,7 @@
-package com.andrewhejl.plannro.usercontroller;
+package com.andrewhejl.plannro.user;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")

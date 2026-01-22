@@ -1,6 +1,12 @@
-package com.andrewhejl.plannro.eventcontroller;
+package com.andrewhejl.plannro.event;
+
+import com.andrewhejl.plannro.user.UserRepo;
+import com.andrewhejl.plannro.user.User;
+import com.andrewhejl.plannro.event.EventRepo;
+import com.andrewhejl.plannro.event.Event;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDateTime;
@@ -10,6 +16,7 @@ import java.util.List;
 @RequestMapping("/events")
 public class EventController
 {
+    @Autowired
     private final EventRepo repo;
 
     public EventController(EventRepo repo) { this.repo = repo; }

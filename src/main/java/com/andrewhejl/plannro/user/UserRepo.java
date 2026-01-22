@@ -1,13 +1,10 @@
-package com.andrewhejl.plannro.userrepo;
+package com.andrewhejl.plannro.user;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-public interface UserRepo extends JpaRepository<User, Long>
-{
+public interface UserRepo extends JpaRepository<User, Long> {
+    Optional<User> findById(Long id);
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
 }

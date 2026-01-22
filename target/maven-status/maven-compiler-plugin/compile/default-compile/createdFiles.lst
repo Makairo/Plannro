@@ -1,4 +1,12 @@
+com\andrewhejl\plannro\auth\RegisterRequest.class
+com\andrewhejl\plannro\auth\AuthService.class
+com\andrewhejl\plannro\auth\LoginRequest.class
 com\andrewhejl\plannro\event\EventRepo.class
 com\andrewhejl\plannro\event\Event.class
-com\andrewhejl\plannro\event\EventController.class
+com\andrewhejl\plannro\user\UserController.class
+com\andrewhejl\plannro\user\UserRepo.class
 com\andrewhejl\plannro\PlannroApplication.class
+com\andrewhejl\plannro\auth\AuthController.class
+com\andrewhejl\plannro\user\User.class
+com\andrewhejl\plannro\event\EventController.class
+com\andrewhejl\plannro\config\Config.class
