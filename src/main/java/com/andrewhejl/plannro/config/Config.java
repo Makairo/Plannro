@@ -14,13 +14,18 @@ public class Config {
     public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
-    {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-        .csrf().disable()       //disable csrf
-        .authorizeHttpRequests(auth->auth.anyRequest().permitAll()) //allow any req
-        .httpBasic().disable()  //disable http
-        .formLogin().disable(); //disable form
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests
+            (
+                auth -> auth
+                .requestMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form.disable())
+            .httpBasic(basic -> basic.disable());
+
         return http.build();
     }
 }
