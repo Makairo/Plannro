@@ -1,12 +1,13 @@
 C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\auth\RegisterRequest.java
 C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\event\Event.java
 C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\config\Config.java
-C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\event\EventRepo.java
-C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\user\UserController.java
 C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\user\UserRepo.java
+C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\auth\AuthResponse.java
 C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\auth\LoginRequest.java
 C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\user\User.java
 C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\auth\AuthController.java
+C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\PlannroApplication.java
+C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\event\EventRepo.java
+C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\user\UserController.java
 C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\event\EventController.java
 C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\auth\AuthService.java
-C:\Users\hejla\Documents\Plannro\src\main\java\com\andrewhejl\plannro\PlannroApplication.java

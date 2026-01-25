@@ -20,7 +20,19 @@ public class Config {
             .authorizeHttpRequests
             (
                 auth -> auth
+                // Public frontend
+                .requestMatchers(
+                    "/",
+                    "/index.html",
+                    "/css/**",
+                    "/js/**",
+                    "/favicon.ico"
+                ).permitAll()
+
+                // Public auth endpoints
                 .requestMatchers("/auth/**").permitAll()
+
+                // Everything else requires auth
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form.disable())

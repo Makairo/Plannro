@@ -3,82 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <title>Plannro Calendar</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js"></script>
 </head>
-<body>
-  <div id="header-content">
-    <h1>Plannro Calendar</h1>
-    <div id="header-controls">
-      <button id="themeToggle">Toggle Theme</button>
+<body class="bg-gray-900 text-white">
+
+  <!-- Sidebar -->
+  <div id="authSidebar" class="fixed top-0 left-0 h-full w-16 bg-gray-800 shadow-lg transform transition-all duration-300 z-50 flex flex-col overflow-hidden">
+    <!-- Toggle Button -->
+    <button id="authToggle" class="p-3 hover:bg-gray-700 focus:outline-none">
+      ☰
+    </button>
+
+    <div id="authContent" class="flex flex-col p-6 space-y-4 opacity-0 pointer-events-none transition-opacity duration-300">
+      <h2 class="text-2xl font-bold mb-4">Plannro</h2>
+
+      <!-- Auth Forms -->
+      <div id="authForms" class="flex flex-col space-y-4">
+        <input type="email" id="authEmail" placeholder="Email" class="p-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        <input type="password" id="authPassword" placeholder="Password" class="p-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        <button onclick="login()" class="bg-indigo-600 hover:bg-indigo-500 p-2 rounded">Login</button>
+        <button onclick="register()" class="bg-gray-600 hover:bg-gray-500 p-2 rounded">Register</button>
+        <p id="authError" class="text-red-500"></p>
+      </div>
+
+      <!-- Logged-in User Panel -->
+      <div id="authUser" class="hidden flex flex-col space-y-2">
+        <p>Logged in as:</p>
+        <strong id="authUserName" class="text-lg"></strong>
+        <button onclick="logout()" class="bg-red-600 hover:bg-red-500 p-2 rounded">Logout</button>
+      </div>
     </div>
   </div>
 
-  <div id="calendar-container">
-    <div id="calendar"></div>
+  <!-- Header -->
+  <div id="header-content" class="p-6 flex justify-between items-center ml-16 md:ml-16">
+    <h1 class="text-3xl font-bold">Plannro Calendar</h1>
+    <!--<button id="themeToggle" class="bg-gray-700 hover:bg-gray-600 p-2 rounded">Toggle Theme</button>-->
   </div>
 
-  <div id="addEventModal" class="modal">
-    <div class="modal-content">
-      <h3>New Event</h3>
-      <input type="text" id="eventTitle" placeholder="Title" required />
-      <textarea id="eventDesc" placeholder="Description"></textarea>
-      <input type="date" id="eventDate" required />
-      <input type="time" id="startTime" value="09:00" />
-      <input type="time" id="endTime" />
-      <div style="text-align:right">
-        <button onclick="saveEvent()">Save</button>
-        <button onclick="closeModal()">Cancel</button>
+  <!-- Calendar -->
+  <div id="calendar-container" class="p-6 h-[calc(100vh-5rem)] ml-16 md:ml-16">
+    <div id="calendar" class="h-full bg-gray-900 rounded-lg shadow-lg"></div>
+  </div>
+
+  <!-- Add Event Modal -->
+  <div id="addEventModal" class="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center hidden z-50">
+    <div class="bg-gray-800 p-6 rounded-lg w-96 flex flex-col space-y-4">
+      <h3 class="text-xl font-bold">New Event</h3>
+      <input type="text" id="eventTitle" placeholder="Title" class="p-2 rounded bg-gray-700" />
+      <textarea id="eventDesc" placeholder="Description" class="p-2 rounded bg-gray-700"></textarea>
+      <input type="date" id="eventDate" class="p-2 rounded bg-gray-700" />
+      <input type="time" id="startTime" class="p-2 rounded bg-gray-700" value="09:00" />
+      <input type="time" id="endTime" class="p-2 rounded bg-gray-700" />
+      <div class="flex justify-end space-x-2">
+        <button onclick="saveEvent()" class="bg-indigo-600 hover:bg-indigo-500 p-2 rounded">Save</button>
+        <button onclick="closeModal()" class="bg-gray-600 hover:bg-gray-500 p-2 rounded">Cancel</button>
       </div>
     </div>
   </div>
 
   <script>
+    // Sidebar toggle integrated
+    const authSidebar = document.getElementById('authSidebar');
+    const authToggle = document.getElementById('authToggle');
+    const authContent = document.getElementById('authContent');
+    let sidebarOpen = false;
+
+    authToggle.addEventListener('click', () => {
+  sidebarOpen = !sidebarOpen;
+  if(sidebarOpen){
+    authSidebar.classList.add('w-64');
+    authSidebar.classList.remove('w-16');
+    authContent.classList.remove('opacity-0','pointer-events-none');
+    authContent.classList.add('opacity-100');
+  } else {
+    authSidebar.classList.add('w-16');
+    authSidebar.classList.remove('w-64');
+    authContent.classList.remove('opacity-100');
+    authContent.classList.add('opacity-0','pointer-events-none');
+  }
+});
+
+
     // Theme toggle
+    /*
     const themeToggle = document.getElementById('themeToggle');
-    const defaultTheme = 'dark';
-    document.body.classList.add(`${defaultTheme}-theme`);
-    let currentTheme = defaultTheme;
-
+    let currentTheme = 'dark';
+    document.body.classList.add('dark');
     themeToggle.addEventListener('click', () => {
-      document.body.classList.remove(`${currentTheme}-theme`);
-      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-      document.body.classList.add(`${currentTheme}-theme`);
+      if(currentTheme === 'dark'){
+        document.body.classList.remove('dark');
+        document.body.classList.add('light');
+        currentTheme = 'light';
+      } else {
+        document.body.classList.remove('light');
+        document.body.classList.add('dark');
+        currentTheme = 'dark';
+      }
     });
+    */
 
-    // Modal
+    // Event Modal
     const modal = document.getElementById('addEventModal');
-    function openModal() { modal.style.display = 'flex'; }
-    function closeModal() { modal.style.display = 'none'; }
+    function openModal(){ modal.classList.remove('hidden'); }
+    function closeModal(){ modal.classList.add('hidden'); }
 
-    async function saveEvent() {
+    async function saveEvent(){
       const title = document.getElementById('eventTitle').value;
       const desc = document.getElementById('eventDesc').value;
       const date = document.getElementById('eventDate').value;
       const start = document.getElementById('startTime').value;
       const end = document.getElementById('endTime').value;
-
       if(!title||!date){ alert("Title and Date required"); return; }
-
       const eventData = { title, description: desc, eventDate: date, startTime: start, endTime: end };
-      try {
-        const response = await fetch('/events', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(eventData)});
-        if(response.ok){ calendar.refetchEvents(); closeModal(); } 
-        else { alert("Error saving event"); }
-      } catch(err){ console.error(err); alert("Error saving event"); }
+      try{
+        const res = await fetch('/events', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(eventData) });
+        if(res.ok){ calendar.refetchEvents(); closeModal(); } 
+        else{ alert("Error saving event"); }
+      }catch(err){ console.error(err); alert("Error saving event"); }
     }
 
     // Calendar
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function(){
       const calendarEl = document.getElementById('calendar');
-      window.calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        height: '100%',
-        headerToolbar: { left:'prev,next today', center:'title', right:'dayGridMonth,timeGridWeek,timeGridDay addEventButton' },
-        customButtons: { addEventButton: {text: 'Create a New Event', click: openModal } },
+      window.calendar = new FullCalendar.Calendar(calendarEl,{
+        initialView:'dayGridMonth',
+        height:'100%',
+        headerToolbar:{ left:'prev,next today', center:'title', right:'dayGridMonth,timeGridWeek,timeGridDay addEventButton' },
+        customButtons:{ addEventButton:{ text:'Create a New Event', click:openModal } },
         events: async function(fetchInfo, success, failure){
-          try {
+          try{
             const res = await fetch('/events');
             const events = await res.json();
             success(events.map(e=>({
@@ -88,12 +144,56 @@
               end:e.eventDate&&e.endTime? e.eventDate+'T'+e.endTime:null,
               description:e.description
             })));
-          } catch(err){ console.error(err); failure(err); }
+          }catch(err){ console.error(err); failure(err); }
         },
         eventClick: info => { alert('Event: '+info.event.title+'\nDescription: '+info.event.extendedProps.description); }
       });
       calendar.render();
     });
+
+    // Auth
+    function setLoggedIn(user){
+      localStorage.setItem('user', JSON.stringify(user));
+      document.getElementById('authForms').classList.add('hidden');
+      document.getElementById('authUser').classList.remove('hidden');
+      document.getElementById('authUserName').innerText = user.email;
+    }
+
+    function logout(){
+      localStorage.removeItem('user');
+      document.getElementById('authForms').classList.remove('hidden');
+      document.getElementById('authUser').classList.add('hidden');
+    }
+
+    async function login(){
+      const email = document.getElementById('authEmail').value;
+      const password = document.getElementById('authPassword').value;
+      const error = document.getElementById('authError');
+      error.innerText = '';
+      try{
+        const res = await fetch('/auth/login',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ email, password }) });
+        if(!res.ok){ error.innerText='Invalid credentials'; return; }
+        const user = await res.json();
+        setLoggedIn(user);
+      }catch(e){ error.innerText='Server error'; }
+    }
+
+    async function register(){
+      const email = document.getElementById('authEmail').value;
+      const password = document.getElementById('authPassword').value;
+      const error = document.getElementById('authError');
+      error.innerText = '';
+      try{
+        const res = await fetch('/auth/register',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ email, password }) });
+        if(!res.ok){ error.innerText='Registration failed'; return; }
+        const user = await res.json();
+        setLoggedIn(user);
+      }catch(e){ error.innerText='Server error'; }
+    }
+
+    // Load saved user
+    const savedUser = localStorage.getItem('user');
+    if(savedUser) setLoggedIn(JSON.parse(savedUser));
   </script>
 </body>
 </html>

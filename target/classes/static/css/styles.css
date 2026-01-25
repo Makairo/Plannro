@@ -176,3 +176,48 @@ box-shadow: none !important;
     cursor: pointer;
 }
 .modal-content button:hover { background-color: var(--event-hover); }
+
+/* Auth Sidebar */
+.auth-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background: var(--bg-secondary, #1e1e1e);
+  color: #fff;
+  padding: 20px;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.auth-sidebar.open {
+  transform: translateX(0);
+}
+
+.auth-sidebar h2 {
+  margin-top: 0;
+}
+
+.auth-sidebar input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.auth-sidebar button {
+  width: 100%;
+  margin-top: 5px;
+  padding: 8px;
+}
+
+.auth-sidebar button.secondary {
+  background: transparent;
+  border: 1px solid #aaa;
+}
+
+.auth-sidebar .error {
+  color: #ff6b6b;
+  margin-top: 10px;
+}
